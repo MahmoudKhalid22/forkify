@@ -1,5 +1,6 @@
 class search {
   #parentElement = document.querySelector('.search');
+  #data;
   getQuery() {
     const query = this.#parentElement.querySelector('.search__field').value;
     this.#clearInput();
@@ -8,6 +9,7 @@ class search {
   #clearInput() {
     this.#parentElement.querySelector('.search__field').value = '';
   }
+
   searchHandlerRender(handler) {
     this.#parentElement.addEventListener('submit', e => {
       e.preventDefault();

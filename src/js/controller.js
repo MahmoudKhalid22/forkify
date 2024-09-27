@@ -3,6 +3,7 @@ import 'regenerator-runtime/runtime';
 import { data, getData, searchData } from './model';
 import recipeViews from './views/recipeViews';
 import searchViews from './views/searchViews';
+import listRecipesView from './views/listRecipesView';
 
 const recipeContainer = document.querySelector('.recipe');
 
@@ -32,7 +33,8 @@ const controlSearchRecipe = async query => {
     // GUARD CLAUSE
     if (!query) throw new Error('Enter a recipe');
 
-    console.log(data.search.result);
+    listRecipesView.renderRecipe(data.search.result);
+    // console.log(data.search.result);
   } catch (err) {
     recipeViews.renderError(err.message);
   }
