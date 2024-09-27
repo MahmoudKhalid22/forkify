@@ -93,7 +93,7 @@ class Recipe {
               <use href="${icons}#icon-check"></use>
             </svg>
             <div class="recipe__quantity">${
-              item.quantity ? new Fraction(item.quantity) : ''
+              item.quantity ? new Fraction(item.quantity).toString() : ''
             }</div>
             <div class="recipe__description">
               <span class="recipe__unit">${item.unit}</span>
