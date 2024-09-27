@@ -1,7 +1,8 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import { data, getData } from './model';
+import { data, getData, searchData } from './model';
 import recipeViews from './views/recipeViews';
+import searchViews from './views/searchViews';
 
 const recipeContainer = document.querySelector('.recipe');
 
@@ -24,4 +25,22 @@ const controlRecipe = async () => {
   }
 };
 
-recipeViews.handleRender(controlRecipe);
+const controlSearchRecipe = async query => {
+  try {
+    // SEACH FOR RECIPE
+    await searchData(query);
+    // GUARD CLAUSE
+    if (!query) throw new Error('Enter a recipe');
+
+    console.log(data.search.result);
+  } catch (err) {
+    recipeViews.renderError(err.message);
+  }
+};
+// controlSearchRecipe('pizza');
+const init = () => {
+  recipeViews.handleRender(controlRecipe);
+  searchViews.searchHandlerRender(controlSearchRecipe);
+};
+
+init();
