@@ -1,4 +1,5 @@
 import icons from 'url:../../img/icons.svg';
+import { Fraction } from 'fractional';
 
 class Recipe {
   #parentElement = document.querySelector('.recipe');
@@ -86,12 +87,14 @@ class Recipe {
         <h2 class="heading--2">Recipe ingredients</h2>
         <ul class="recipe__ingredient-list">
         
-        ${this.#data.ingredients.map((item, i) => {
+        ${this.#data.ingredients.map(item => {
           return ` <li class="recipe__ingredient">
             <svg class="recipe__icon">
               <use href="${icons}#icon-check"></use>
             </svg>
-            <div class="recipe__quantity">${item.quantity}</div>
+            <div class="recipe__quantity">${
+              item.quantity ? new Fraction(item.quantity) : ''
+            }</div>
             <div class="recipe__description">
               <span class="recipe__unit">${item.unit}</span>
               ${item.description}
