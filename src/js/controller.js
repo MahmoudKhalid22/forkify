@@ -23,6 +23,4 @@ const controlRecipe = async () => {
   }
 };
 
-['hashchange', 'load'].forEach(ev =>
-  window.addEventListener(ev, controlRecipe)
-);
+recipeViews.handleRender(controlRecipe);
