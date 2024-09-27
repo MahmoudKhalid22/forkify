@@ -1,6 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import { data, getData, searchData } from './model';
+import { data, getData, getSearchResultPage, searchData } from './model';
 import recipeViews from './views/recipeViews';
 import searchViews from './views/searchViews';
 import listRecipesView from './views/listRecipesView';
@@ -34,7 +34,7 @@ const controlSearchRecipe = async query => {
     // GUARD CLAUSE
     if (!query) throw new Error('Enter a recipe');
 
-    listRecipesView.render(data.search.result);
+    listRecipesView.render(getSearchResultPage(1));
     // console.log(data.search.result);
   } catch (err) {
     console.log(err);
