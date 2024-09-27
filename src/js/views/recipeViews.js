@@ -4,6 +4,7 @@ import { Fraction } from 'fractional';
 class Recipe {
   #parentElement = document.querySelector('.recipe');
   #data;
+  #errorMessage = 'Something went wrong';
 
   renderRecipe(data) {
     this.#data = data;
@@ -24,6 +25,20 @@ class Recipe {
         </div>
   `;
 
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+  renderError(message = this.#errorMessage) {
+    const markup = `
+          <div class="error">
+            <div>
+              <svg>
+                <use href="${icons}#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div> 
+    `;
     this.#clear();
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   }

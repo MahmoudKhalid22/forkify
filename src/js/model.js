@@ -12,6 +12,7 @@ export const getData = async id => {
     const { recipe } = result.data;
     data.state = recipe;
   } catch (err) {
-    alert(err.message);
+    // alert(err.message);
+    throw err;
   }
 };
