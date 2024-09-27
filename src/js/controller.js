@@ -19,7 +19,7 @@ const controlRecipe = async () => {
 
     await getData(id);
     const recipe = data.state;
-    recipeViews.renderRecipe(recipe);
+    recipeViews.render(recipe);
   } catch (err) {
     // console.log(err.message);
     recipeViews.renderError(err.message);
@@ -29,14 +29,16 @@ const controlRecipe = async () => {
 const controlSearchRecipe = async query => {
   try {
     // SEACH FOR RECIPE
+    listRecipesView.renderSpinner();
     await searchData(query);
     // GUARD CLAUSE
     if (!query) throw new Error('Enter a recipe');
 
-    listRecipesView.renderRecipe(data.search.result);
+    listRecipesView.render(data.search.result);
     // console.log(data.search.result);
   } catch (err) {
-    recipeViews.renderError(err.message);
+    console.log(err);
+    listRecipesView.renderError(err.message);
   }
 };
 // controlSearchRecipe('pizza');
