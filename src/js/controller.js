@@ -4,6 +4,7 @@ import { data, getData, getSearchResultPage, searchData } from './model';
 import recipeViews from './views/recipeViews';
 import searchViews from './views/searchViews';
 import listRecipesView from './views/listRecipesView';
+import paginationView from './views/paginationView';
 
 const recipeContainer = document.querySelector('.recipe');
 
@@ -35,16 +36,23 @@ const controlSearchRecipe = async query => {
     if (!query) throw new Error('Enter a recipe');
 
     listRecipesView.render(getSearchResultPage(1));
-    // console.log(data.search.result);
+    paginationView.render(data.search.result);
   } catch (err) {
     console.log(err);
     listRecipesView.renderError(err.message);
   }
 };
-// controlSearchRecipe('pizza');
+
+const controlPagination = goTo => {
+  console.log(goTo);
+  listRecipesView.render(getSearchResultPage(goTo));
+  paginationView.render(data.search.result);
+};
+
 const init = () => {
   recipeViews.handleRender(controlRecipe);
   searchViews.searchHandlerRender(controlSearchRecipe);
+  paginationView.handleRender(controlPagination);
 };
 
 init();
