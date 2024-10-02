@@ -28,6 +28,7 @@ export const searchData = async query => {
     data.search.query = query;
     let result = await getJSON(`${API_URL}?search=${query}`);
     result = result.data.recipes;
+    // console.log(result);
     const recipes = result.map(res => {
       return {
         id: res.id,
@@ -48,4 +49,11 @@ export const getSearchResultPage = (page = data.search.page) => {
   const end = page * data.search.resultsPerPage;
 
   return data.search.result.slice(start, end);
+};
+
+export const updateServings = newServings => {
+  data.state.ingredients.forEach(item => {
+    item.quantity = (+item.quantity * +newServings) / +data.state.servings;
+  });
+  data.state.servings = +newServings;
 };

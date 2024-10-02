@@ -1,6 +1,12 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import { data, getData, getSearchResultPage, searchData } from './model';
+import {
+  data,
+  getData,
+  getSearchResultPage,
+  searchData,
+  updateServings,
+} from './model';
 import recipeViews from './views/recipeViews';
 import searchViews from './views/searchViews';
 import listRecipesView from './views/listRecipesView';
@@ -20,6 +26,7 @@ const controlRecipe = async () => {
 
     await getData(id);
     const recipe = data.state;
+    // console.log(recipe);
     recipeViews.render(recipe);
   } catch (err) {
     // console.log(err.message);
@@ -49,8 +56,17 @@ const controlPagination = goTo => {
   paginationView.render(data.search.result);
 };
 
+const controlServings = function (newServings) {
+  // UPDAT STATE
+  updateServings(newServings);
+
+  // UPDATE VIEW
+  recipeViews.render(data.state);
+};
+
 const init = () => {
   recipeViews.handleRender(controlRecipe);
+  recipeViews.handleServingsRender(controlServings);
   searchViews.searchHandlerRender(controlSearchRecipe);
   paginationView.handleRender(controlPagination);
 };
