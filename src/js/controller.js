@@ -81,7 +81,7 @@ const controlBookmark = function () {
   // 2) update view
   recipeView.update(data.state);
   // 3) update bookmark list
-  bookmarklistView.update(data.bookmarks);
+  bookmarklistView.render(data.bookmarks);
 
   if (data.bookmarks.length === 0) {
     bookmarklistView.renderMessage('No bookmarks listed');
@@ -90,6 +90,8 @@ const controlBookmark = function () {
 
 const controlBookmarkList = function () {
   bookmarklistView.render(data.bookmarks);
+  if (data.bookmarks.length === 0)
+    bookmarklistView.renderMessage('No bookmarks listed');
 };
 
 const controlUploadRecipe = async function (newRecipe) {
