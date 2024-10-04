@@ -8,6 +8,26 @@ const timeout = function (s) {
   });
 };
 
+export const AJAX = async function (url, uploadData = undefined) {
+  const fetchPro = uploadData
+    ? fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(uploadData),
+      })
+    : fetch(url);
+
+  const res = await Promise.race([fetchPro, timeout(TIME_OUT)]);
+  const data = await res.json();
+  // console.log(data);
+  if (!res.ok) throw new Error(result.message);
+  if (data.results && data.results === 0)
+    throw new Error('Not Found Recipe, Try another one!');
+  return data;
+};
+/*
 export const getJSON = async function (url) {
   try {
     const res = await Promise.race([fetch(url), timeout(TIME_OUT)]);
@@ -39,3 +59,4 @@ export const setJSON = async function (url, recipe) {
     throw err;
   }
 };
+*/

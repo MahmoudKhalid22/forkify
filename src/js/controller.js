@@ -75,12 +75,17 @@ const controlServings = function (newServings) {
 
 const controlBookmark = function () {
   // 1) add or remove bookmark
+
   if (!data.state.bookmarked) addBookmark(data.state);
   else removeBookmark(data.state.id);
   // 2) update view
   recipeView.update(data.state);
   // 3) update bookmark list
   bookmarklistView.update(data.bookmarks);
+
+  if (data.bookmarks.length === 0) {
+    bookmarklistView.renderMessage('No bookmarks listed');
+  }
 };
 
 const controlBookmarkList = function () {
@@ -89,11 +94,16 @@ const controlBookmarkList = function () {
 
 const controlUploadRecipe = async function (newRecipe) {
   try {
+    // 1) Render the spinner and upload recipe and render message
+    uploadRecipeView.renderSpinner();
     await uploadNewRecipe(newRecipe);
-    // console.log(data.state);
+    uploadRecipeView.renderMessage('Recipe has been uploaded');
     // 2) Render owned recipe
     recipeView.render(data.state);
-    // 3) Render bookmark
+
+    // 3) Change id to the uploaded recipe
+    window.history.pushState(null, '', `#${data.state.id}`);
+    // 4) Render bookmark
     bookmarklistView.render(data.bookmarks);
   } catch (err) {
     uploadRecipeView.renderError(err.message);
