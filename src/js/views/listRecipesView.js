@@ -5,10 +5,14 @@ class list extends View {
   _parentElement = document.querySelector('.results');
 
   _generateMarkup() {
+    const id = window.location.hash.slice(1);
+
     return `${this._data
       .map(item => {
         return `<li class="preview">
-            <a class="preview__link" href="#${item.id}">
+            <a class="preview__link ${
+              id === item.id ? 'preview__link--active' : ''
+            }" href="#${item.id}">
               <figure class="preview__fig">
                 <img src="${item.image}" alt="${item.title}" />
               </figure>

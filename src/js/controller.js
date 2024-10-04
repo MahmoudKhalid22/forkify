@@ -24,9 +24,13 @@ const controlRecipe = async () => {
     if (!id) return; // guard clause
     recipeViews.renderSpinner();
 
+    // update view
+    listRecipesView.update(getSearchResultPage());
+
+    // loading recipe
     await getData(id);
     const recipe = data.state;
-    // console.log(recipe);
+    // render recipe
     recipeViews.render(recipe);
   } catch (err) {
     // console.log(err.message);
@@ -61,7 +65,7 @@ const controlServings = function (newServings) {
   updateServings(newServings);
 
   // UPDATE VIEW
-  recipeViews.render(data.state);
+  recipeViews.update(data.state);
 };
 
 const init = () => {

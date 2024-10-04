@@ -8,6 +8,7 @@ export const data = {
     result: [],
     resultsPerPage: RESULTS_PER_PAGE,
     currentPage: 1,
+    page: 1,
   },
 };
 
