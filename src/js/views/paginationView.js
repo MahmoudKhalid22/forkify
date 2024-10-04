@@ -11,9 +11,6 @@ class Pagination extends View {
       const btn = e.target.closest('.btn--inline');
       if (!btn) return;
       const goto = +btn.dataset.goto;
-      console.log(btn.dataset);
-      console.log(goto);
-
       handler(goto);
     });
   }
@@ -26,22 +23,32 @@ class Pagination extends View {
 
     // first page with no anohter pages
     if (curPage === 1 && curPage === numPages) {
-      return '';
+      return `<p class="no-of-pages">${curPage}/ ${Math.ceil(
+        data.search.result.length / data.search.resultsPerPage
+      )}</p>`;
     }
     // last page
     if (curPage === numPages && numPages > 1) {
-      return this._generateMarkupButton('prev', curPage);
+      return `<p class="no-of-pages">${curPage}/ ${Math.ceil(
+        data.search.result.length / data.search.resultsPerPage
+      )}</p>
+      
+      ${this._generateMarkupButton('prev', curPage)}`;
     }
     // first page with other pages
     if (curPage === 1 && numPages > 1) {
-      return this._generateMarkupButton('next', curPage);
+      return `<p class="no-of-pages">${curPage}/ ${Math.ceil(
+        data.search.result.length / data.search.resultsPerPage
+      )}</p> ${this._generateMarkupButton('next', curPage)}`;
     }
 
     // other pages prev and next
     if (curPage > 1 && curPage < numPages) {
       const prevButton = this._generateMarkupButton('prev', curPage);
       const nextButton = this._generateMarkupButton('next', curPage);
-      return `${prevButton} ${nextButton}`;
+      return `<p class="no-of-pages">${curPage}/ ${Math.ceil(
+        data.search.result.length / data.search.resultsPerPage
+      )}</p> ${prevButton}  ${nextButton}`;
     }
   }
   _generateMarkupButton(btn, page = data.search.currentPage) {
@@ -53,7 +60,8 @@ class Pagination extends View {
               <use href="${icons}#icon-arrow-left"></use>
             </svg>
             <span>Page ${page - 1}</span>
-          </button>`
+          </button>
+          `
       : `<button data-goTo=${
           page + 1
         } class="btn--inline pagination__btn--next">
