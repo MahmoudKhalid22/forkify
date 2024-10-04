@@ -1,9 +1,11 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import {
+  addBookmark,
   data,
   getData,
   getSearchResultPage,
+  removeBookmark,
   searchData,
   updateServings,
 } from './model';
@@ -11,6 +13,7 @@ import recipeViews from './views/recipeViews';
 import searchViews from './views/searchViews';
 import listRecipesView from './views/listRecipesView';
 import paginationView from './views/paginationView';
+import bookmarklistView from './views/bookmarklistView';
 
 const recipeContainer = document.querySelector('.recipe');
 
@@ -26,6 +29,8 @@ const controlRecipe = async () => {
 
     // update view
     listRecipesView.update(getSearchResultPage());
+    // update bookmarklist
+    bookmarklistView.update(data.bookmarks);
 
     // loading recipe
     await getData(id);
@@ -68,9 +73,26 @@ const controlServings = function (newServings) {
   recipeViews.update(data.state);
 };
 
+const controlBookmark = function () {
+  // 1) add or remove bookmark
+  if (!data.state.bookmarked) addBookmark(data.state);
+  else removeBookmark(data.state.id);
+  // 2) update view
+  recipeViews.update(data.state);
+  // 3) update bookmark list
+  bookmarklistView.update(data.bookmarks);
+};
+
+const controlBookmarkList = function () {
+  bookmarklistView.render(data.bookmarks);
+};
+
 const init = () => {
   recipeViews.handleRender(controlRecipe);
   recipeViews.handleServingsRender(controlServings);
+
+  recipeViews.handleBookmarkRender(controlBookmark);
+  bookmarklistView.handleRender(controlBookmarkList);
   searchViews.searchHandlerRender(controlSearchRecipe);
   paginationView.handleRender(controlPagination);
 };

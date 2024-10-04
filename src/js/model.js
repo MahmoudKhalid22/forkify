@@ -10,6 +10,7 @@ export const data = {
     currentPage: 1,
     page: 1,
   },
+  bookmarks: [],
 };
 
 export const getData = async id => {
@@ -18,6 +19,10 @@ export const getData = async id => {
 
     const { recipe } = result.data;
     data.state = recipe;
+
+    const isBookmarked = data.bookmarks.some(item => item.id === id);
+    if (isBookmarked) data.state.bookmarked = true;
+    else data.state.bookmarked = false;
   } catch (err) {
     // alert(err.message);
     throw err;
@@ -58,3 +63,26 @@ export const updateServings = newServings => {
   });
   data.state.servings = +newServings;
 };
+
+export const addBookmark = function (recipe) {
+  data.bookmarks.push(recipe);
+  if (recipe.id === data.state.id) data.state.bookmarked = true;
+  saveBookmarks();
+};
+
+export const removeBookmark = function (id) {
+  data.bookmarks = data.bookmarks.filter(bookmark => bookmark.id !== id);
+  if (id === data.state.id) data.state.bookmarked = false;
+  saveBookmarks();
+};
+
+export const saveBookmarks = function () {
+  localStorage.setItem('bookmarks', JSON.stringify(data.bookmarks));
+};
+
+export const getBookmarks = function () {
+  const storage = JSON.parse(localStorage.getItem('bookmarks'));
+  console.log(storage);
+  if (storage) data.bookmarks = storage;
+};
+getBookmarks();

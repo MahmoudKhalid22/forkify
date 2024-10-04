@@ -24,7 +24,7 @@ export default class View {
       const curEl = currentElement[i];
       if (
         !item.isEqualNode(curEl) &&
-        item?.firstChild.nodeValue.trim() !== ''
+        item?.firstChild?.nodeValue.trim() !== ''
       ) {
         curEl.textContent = item.textContent;
       }
