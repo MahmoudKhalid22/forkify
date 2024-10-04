@@ -88,11 +88,10 @@ const controlBookmarkList = function () {
 };
 
 const init = () => {
+  bookmarklistView.handleRender(controlBookmarkList);
   recipeViews.handleRender(controlRecipe);
   recipeViews.handleServingsRender(controlServings);
-
   recipeViews.handleBookmarkRender(controlBookmark);
-  bookmarklistView.handleRender(controlBookmarkList);
   searchViews.searchHandlerRender(controlSearchRecipe);
   paginationView.handleRender(controlPagination);
 };
