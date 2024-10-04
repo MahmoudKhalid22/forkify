@@ -1,6 +1,6 @@
 import View from './View';
 import icons from 'url:../../img/icons.svg';
-import Fraction from 'fraction.js';
+import bigRat from 'big-rational';
 
 class Recipe extends View {
   _parentElement = document.querySelector('.recipe');
@@ -100,9 +100,9 @@ class Recipe extends View {
             <svg class="recipe__icon">
               <use href="${icons}#icon-check"></use>
             </svg>
-            <div class="recipe__quantity">${
-              item.quantity ? new Fraction(item.quantity).toString() : ''
-            }</div>
+            <div class="recipe__quantity">
+            ${item.quantity ? bigRat(item.quantity).toString() : ''}
+            </div>
             <div class="recipe__description">
               <span class="recipe__unit">${item.unit}</span>
               ${item.description}

@@ -38,7 +38,7 @@ const controlRecipe = async () => {
     // render recipe
     recipeView.render(recipe);
   } catch (err) {
-    // console.log(err.message);
+    console.log(err);
     recipeView.renderError(err.message);
   }
 };
@@ -54,13 +54,11 @@ const controlSearchRecipe = async query => {
     listRecipesView.render(getSearchResultPage(1));
     paginationView.render(data.search.result);
   } catch (err) {
-    console.log(err);
     listRecipesView.renderError(err.message);
   }
 };
 
 const controlPagination = goTo => {
-  console.log(goTo);
   listRecipesView.render(getSearchResultPage(goTo));
   paginationView.render(data.search.result);
 };
