@@ -8,14 +8,14 @@ import {
   removeBookmark,
   searchData,
   updateServings,
+  uploadNewRecipe,
 } from './model';
-import recipeViews from './views/recipeViews';
+import recipeView from './views/recipeView';
 import searchViews from './views/searchViews';
 import listRecipesView from './views/listRecipesView';
 import paginationView from './views/paginationView';
 import bookmarklistView from './views/bookmarklistView';
-
-const recipeContainer = document.querySelector('.recipe');
+import uploadRecipeView from './views/uploadRecipeView';
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -25,7 +25,7 @@ const controlRecipe = async () => {
   try {
     const id = window.location.hash.slice(1);
     if (!id) return; // guard clause
-    recipeViews.renderSpinner();
+    recipeView.renderSpinner();
 
     // update view
     listRecipesView.update(getSearchResultPage());
@@ -36,10 +36,10 @@ const controlRecipe = async () => {
     await getData(id);
     const recipe = data.state;
     // render recipe
-    recipeViews.render(recipe);
+    recipeView.render(recipe);
   } catch (err) {
     // console.log(err.message);
-    recipeViews.renderError(err.message);
+    recipeView.renderError(err.message);
   }
 };
 
@@ -70,7 +70,7 @@ const controlServings = function (newServings) {
   updateServings(newServings);
 
   // UPDATE VIEW
-  recipeViews.update(data.state);
+  recipeView.update(data.state);
 };
 
 const controlBookmark = function () {
@@ -78,7 +78,7 @@ const controlBookmark = function () {
   if (!data.state.bookmarked) addBookmark(data.state);
   else removeBookmark(data.state.id);
   // 2) update view
-  recipeViews.update(data.state);
+  recipeView.update(data.state);
   // 3) update bookmark list
   bookmarklistView.update(data.bookmarks);
 };
@@ -87,13 +87,27 @@ const controlBookmarkList = function () {
   bookmarklistView.render(data.bookmarks);
 };
 
+const controlUploadRecipe = async function (newRecipe) {
+  try {
+    await uploadNewRecipe(newRecipe);
+    // console.log(data.state);
+    // 2) Render owned recipe
+    recipeView.render(data.state);
+    // 3) Render bookmark
+    bookmarklistView.render(data.bookmarks);
+  } catch (err) {
+    uploadRecipeView.renderError(err.message);
+  }
+};
+
 const init = () => {
   bookmarklistView.handleRender(controlBookmarkList);
-  recipeViews.handleRender(controlRecipe);
-  recipeViews.handleServingsRender(controlServings);
-  recipeViews.handleBookmarkRender(controlBookmark);
+  recipeView.handleRender(controlRecipe);
+  recipeView.handleServingsRender(controlServings);
+  recipeView.handleBookmarkRender(controlBookmark);
   searchViews.searchHandlerRender(controlSearchRecipe);
   paginationView.handleRender(controlPagination);
+  uploadRecipeView.addHandlerRecipe(controlUploadRecipe);
 };
 
 init();
