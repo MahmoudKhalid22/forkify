@@ -30,7 +30,7 @@ The application follows the MVC (Model-View-Controller) architecture:
 To run Forkify locally, follow these steps:
 Clone the repository and install dependencies and start the project:
    ```bash
-   git clone <repository-url>
+   git clone [<repository-url>](https://github.com/MahmoudKhalid22/forkify.git)
    cd forkify
    npm install
    npm start
