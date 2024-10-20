@@ -40,4 +40,6 @@ Clone the repository and install dependencies and start the project:
 - HTML
 - SASS
 - Javascript
-   
+
+## Live Demo
+[Live Demo Link](https://foodappforkify.netlify.app/)
